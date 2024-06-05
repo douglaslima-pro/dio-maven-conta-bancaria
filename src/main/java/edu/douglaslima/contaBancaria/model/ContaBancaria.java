@@ -22,6 +22,7 @@ public abstract class ContaBancaria {
 		this.numero = ++SEQUENCIAL;
 		this.saldo = 0d;
 		this.titular = titular;
+		this.extrato = new Extrato();
 	}
 
 	public boolean depositar(double valorDeposito) {
@@ -30,7 +31,7 @@ public abstract class ContaBancaria {
 		} else {
 			double saldoInicial = this.saldo;
 			this.saldo += valorDeposito;
-			this.extrato.registrarDeposito(saldoInicial, saldoInicial);
+			this.extrato.registrarDeposito(saldoInicial, this.saldo);
 			return true;
 		}
 	}
@@ -41,7 +42,7 @@ public abstract class ContaBancaria {
 		} else {
 			double saldoInicial = this.saldo;
 			this.saldo -= valorSaque;
-			this.extrato.registrarSaque(saldoInicial, saldoInicial);
+			this.extrato.registrarSaque(saldoInicial, this.saldo);
 			return true;
 		}
 	}
@@ -53,23 +54,26 @@ public abstract class ContaBancaria {
 			double saldoInicial = this.saldo;
 			this.saldo -= valorTransferencia;
 			contaDestino.receber(valorTransferencia, this);
-			this.extrato.registrarTransferencia(contaDestino, saldoInicial, saldoInicial);
+			this.extrato.registrarTransferencia(contaDestino, saldoInicial, this.saldo);
 			return true;
 		}
 	}
-	
+
 	public boolean receber(double valor, ContaBancaria contaOrigem) {
 		if (valor <= 0) {
 			return false;
 		} else {
 			double saldoInicial = this.saldo;
 			this.saldo += valor;
-			this.extrato.registrarRecebimento(contaOrigem, saldoInicial, saldoInicial);
+			this.extrato.registrarRecebimento(contaOrigem, saldoInicial, this.saldo);
 			return true;
 		}
 	}
-	
+
 	public void imprimirExtratoCompleto() {
+		System.out.println();
+		System.out.println("Cliente: " + this.titular.getNome());
+		System.out.println("CPF: " + this.titular.getCpf());
 		this.extrato.obterExtratoCompleto().forEach(System.out::println);
 	}
 
@@ -88,6 +92,12 @@ public abstract class ContaBancaria {
 		}
 		ContaBancaria cb = (ContaBancaria) o;
 		return this.agencia == cb.getAgencia() && this.numero == cb.getNumero();
+	}
+
+	@Override
+	public String toString() {
+		return String.format("ContaBancaria [titular = '%s', agencia = %d, numero = %d, tipoConta = '%s', saldo = %.2f]",
+				this.titular.getNome(), this.agencia, this.numero, this.tipoConta, this.saldo);
 	}
 
 	public int getAgencia() {
@@ -109,5 +119,5 @@ public abstract class ContaBancaria {
 	public String getTipoConta() {
 		return this.tipoConta;
 	}
-	
+
 }
