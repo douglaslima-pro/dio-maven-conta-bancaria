@@ -2,10 +2,6 @@ package edu.douglaslima.contaBancaria;
 
 import edu.douglaslima.contaBancaria.model.*;
 import java.time.LocalDate;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 public class App {
 	
@@ -31,5 +27,5 @@ public class App {
 		itau.pesquisarContaBancaria(1, 1002).imprimirExtratoCompleto();
 
 	}
-	
+	 
 }

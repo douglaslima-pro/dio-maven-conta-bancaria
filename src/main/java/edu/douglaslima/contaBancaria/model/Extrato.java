@@ -17,8 +17,8 @@ public class Extrato {
 			return this.historicoMovimentacoes.add(movimentacao);
 		} catch (InterruptedException e) {
 			System.out.println(e.getMessage());
+			return false;
 		}
-		return false;
 	}
 
 	public boolean registrarSaque(double saldoInicial, double saldoFinal) {
@@ -29,8 +29,8 @@ public class Extrato {
 			return this.historicoMovimentacoes.add(movimentacao);
 		} catch (InterruptedException e) {
 			System.out.println(e.getMessage());
+			return false;
 		}
-		return false;
 	}
 
 	public boolean registrarTransferencia(ContaBancaria contaDestino, double saldoInicial, double saldoFinal) {
@@ -42,10 +42,10 @@ public class Extrato {
 			return this.historicoMovimentacoes.add(movimentacao);
 		} catch (InterruptedException e) {
 			System.out.println(e.getMessage());
+			return false;
 		}
-		return false;
 	}
-
+	
 	public boolean registrarRecebimento(ContaBancaria contaOrigem, double saldoInicial, double saldoFinal) {
 		try {
 			Thread.sleep(1000);
@@ -55,8 +55,8 @@ public class Extrato {
 			return this.historicoMovimentacoes.add(movimentacao);
 		} catch (InterruptedException e) {
 			System.out.println(e.getMessage());
+			return false;
 		}
-		return false;
 	}
 
 	public Set<Movimentacao> obterExtratoCompleto() {
